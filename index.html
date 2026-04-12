@@ -10,24 +10,21 @@
     <div class="crt scanlines">
         <div id="main-menu" class="screen active">
             <h1 class="glow-text mega-glow">NEON PONG</h1>
-            
-            <div class="menu-names" style="display: flex; gap: 20px; margin-bottom: 20px;">
-                <input type="text" id="p1Name" class="cyber-select cyber-input" style="width: 150px; font-size: 15px;" placeholder="P1 NAME" value="PLAYER 1">
-                <input type="text" id="p2Name" class="cyber-select cyber-input" style="width: 150px; font-size: 15px;" placeholder="P2 NAME" value="PLAYER 2">
-            </div>
-
             <div class="menu-buttons">
-                <button id="btn-vs-ai" class="cyber-btn mega-btn">VS AI</button>
-                <button id="btn-vs-player" class="cyber-btn mega-btn">VS PLAYER</button>
-                <button id="btn-settings" class="cyber-btn mega-btn">SETTINGS</button>
+                <button id="btn-menu-vs-ai" class="cyber-btn mega-btn">VS AI</button>
+                <button id="btn-menu-vs-player" class="cyber-btn mega-btn">VS PLAYER</button>
+                <button id="btn-settings" class="cyber-btn mega-btn">THEMES</button>
             </div>
         </div>
 
-        <div id="settings-menu" class="screen">
-            <h1 class="glow-text mega-glow">SETTINGS</h1>
+        <div id="setup-ai-menu" class="screen">
+            <h1 class="glow-text mega-glow">VS AI</h1>
             <div class="menu-buttons">
+                <label>P1 Name:
+                    <input type="text" id="ai-p1Name" class="cyber-select cyber-input" style="width: 150px" placeholder="PLAYER 1" value="PLAYER 1">
+                </label>
                 <label>Difficulty:
-                    <select id="botDifficulty" class="cyber-select">
+                    <select id="ai-botDifficulty" class="cyber-select">
                         <option value="easy">Easy</option>
                         <option value="medium" selected>Medium</option>
                         <option value="hard">Hard</option>
@@ -35,14 +32,47 @@
                         <option value="extreme">Extreme</option>
                     </select>
                 </label>
+                <label>Goal Score:
+                    <input type="number" id="ai-gameWinScore" class="cyber-select cyber-input" min="3" max="10" value="10">
+                </label>
                 <label>Speed:
-                    <select id="gameSpeed" class="cyber-select">
+                    <select id="ai-gameSpeed" class="cyber-select">
                         <option value="0.5">Slow (0.5x)</option>
                         <option value="1" selected>Normal (1.0x)</option>
                         <option value="1.5">Fast (1.5x)</option>
                         <option value="2">Hyper (2.0x)</option>
                     </select>
                 </label>
+                <button id="start-vs-ai" class="cyber-btn mega-btn" style="margin-top: 10px;">START MATCH</button>
+                <button class="cyber-btn mega-btn btn-back-main">BACK</button>
+            </div>
+        </div>
+
+        <div id="setup-pvp-menu" class="screen">
+            <h1 class="glow-text mega-glow">VS PLAYER</h1>
+            <div class="menu-buttons">
+                <label>P1 Name:
+                    <input type="text" id="pvp-p1Name" class="cyber-select cyber-input" style="width: 150px" placeholder="PLAYER 1" value="PLAYER 1">
+                </label>
+                <label>P2 Name:
+                    <input type="text" id="pvp-p2Name" class="cyber-select cyber-input" style="width: 150px" placeholder="PLAYER 2" value="PLAYER 2">
+                </label>
+                <label>Speed:
+                    <select id="pvp-gameSpeed" class="cyber-select">
+                        <option value="0.5">Slow (0.5x)</option>
+                        <option value="1" selected>Normal (1.0x)</option>
+                        <option value="1.5">Fast (1.5x)</option>
+                        <option value="2">Hyper (2.0x)</option>
+                    </select>
+                </label>
+                <button id="start-vs-pvp" class="cyber-btn mega-btn" style="margin-top: 10px;">START MATCH</button>
+                <button class="cyber-btn mega-btn btn-back-main">BACK</button>
+            </div>
+        </div>
+
+        <div id="settings-menu" class="screen">
+            <h1 class="glow-text mega-glow">THEMES</h1>
+            <div class="menu-buttons">
                 <label>Theme:
                     <select id="gameTheme" class="cyber-select">
                         <option value="green">Matrix Green</option>
@@ -51,10 +81,7 @@
                         <option value="white">Retro White</option>
                     </select>
                 </label>
-                <label>Goal Score:
-                    <input type="number" id="gameWinScore" class="cyber-select cyber-input" min="3" max="10" value="10">
-                </label>
-                <button id="btn-back" class="cyber-btn mega-btn" style="margin-top: 10px;">BACK</button>
+                <button class="cyber-btn mega-btn btn-back-main" style="margin-top: 10px;">BACK</button>
             </div>
         </div>
 

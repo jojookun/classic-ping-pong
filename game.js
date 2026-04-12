@@ -90,16 +90,44 @@ function showScreen(id) {
     document.getElementById(id).classList.add('active');
 }
 
+// Navigation Events
+document.getElementById('btn-menu-vs-ai').addEventListener('click', () => showScreen('setup-ai-menu'));
+document.getElementById('btn-menu-vs-player').addEventListener('click', () => showScreen('setup-pvp-menu'));
+document.getElementById('btn-settings').addEventListener('click', () => showScreen('settings-menu'));
+document.querySelectorAll('.btn-back-main').forEach(btn => {
+    btn.addEventListener('click', () => showScreen('main-menu'));
+});
+document.getElementById('restartBtn').addEventListener('click', () => {
+    gameOver = true;
+    showScreen('main-menu');
+});
+
+// Setup Menu Actions
+document.getElementById('start-vs-ai').addEventListener('click', () => {
+    difficulty = document.getElementById('ai-botDifficulty').value;
+    speedMultiplier = parseFloat(document.getElementById('ai-gameSpeed').value);
+    
+    let wScore = parseInt(document.getElementById('ai-gameWinScore').value);
+    WIN_SCORE = (isNaN(wScore) || wScore < 3) ? 3 : (wScore > 10 ? 10 : wScore);
+    
+    p1.name = document.getElementById('ai-p1Name').value.trim().toUpperCase() || 'PLAYER 1';
+    p2.name = 'BOT ' + difficulty.toUpperCase();
+    
+    startNewGame('bot');
+});
+
+document.getElementById('start-vs-pvp').addEventListener('click', () => {
+    speedMultiplier = parseFloat(document.getElementById('pvp-gameSpeed').value);
+    WIN_SCORE = 10; 
+    
+    p1.name = document.getElementById('pvp-p1Name').value.trim().toUpperCase() || 'PLAYER 1';
+    p2.name = document.getElementById('pvp-p2Name').value.trim().toUpperCase() || 'PLAYER 2';
+    
+    startNewGame('pvp');
+});
+
 function startNewGame(selectedMode) {
     mode = selectedMode;
-    p1.name = document.getElementById('p1Name').value.trim().toUpperCase() || 'PLAYER 1';
-    
-    if (selectedMode === 'bot') {
-        p2.name = 'BOT ' + difficulty.toUpperCase();
-    } else {
-        p2.name = document.getElementById('p2Name').value.trim().toUpperCase() || 'PLAYER 2';
-    }
-
     p1.score = 0; 
     p2.score = 0;
     p1.vy = 0;
@@ -110,35 +138,6 @@ function startNewGame(selectedMode) {
     if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
 }
 
-document.getElementById('btn-vs-ai').addEventListener('click', () => startNewGame('bot'));
-document.getElementById('btn-vs-player').addEventListener('click', () => startNewGame('pvp'));
-
-document.getElementById('btn-settings').addEventListener('click', () => {
-    showScreen('settings-menu');
-});
-
-document.getElementById('btn-back').addEventListener('click', () => {
-    showScreen('main-menu');
-});
-
-document.getElementById('restartBtn').addEventListener('click', () => {
-    gameOver = true;
-    showScreen('main-menu');
-});
-
-// Settings Elements mapping
-document.getElementById('botDifficulty').addEventListener('change', e => difficulty = e.target.value);
-document.getElementById('gameSpeed').addEventListener('change', e => {
-    speedMultiplier = parseFloat(e.target.value);
-    resetBall(); 
-});
-document.getElementById('gameWinScore').addEventListener('change', e => {
-    let val = parseInt(e.target.value);
-    if (isNaN(val) || val < 3) val = 3;
-    if (val > 10) val = 10;
-    e.target.value = val;
-    WIN_SCORE = val;
-});
 document.getElementById('gameTheme').addEventListener('change', e => {
     currentTheme = themes[e.target.value] || themes.green;
     document.documentElement.style.setProperty('--neon-green', currentTheme.fg);
