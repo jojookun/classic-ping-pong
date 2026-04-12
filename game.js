@@ -75,8 +75,8 @@ let trail = [];
 const ball = { x: canvas.width / 2, y: canvas.height / 2, size: 10, speedX: 5, speedY: 5, baseSpeed: 5 };
 // Player movement tuning for smoothness
 const paddle = { width: 10, height: 80, accel: 3, friction: 0.8, maxSpeed: 18 };
-const p1 = { x: 20, y: canvas.height / 2 - paddle.height / 2, vy: 0, score: 0 };
-const p2 = { x: canvas.width - 30, y: canvas.height / 2 - paddle.height / 2, vy: 0, score: 0 };
+const p1 = { x: 20, y: canvas.height / 2 - paddle.height / 2, vy: 0, score: 0, name: 'PLAYER 1' };
+const p2 = { x: canvas.width - 30, y: canvas.height / 2 - paddle.height / 2, vy: 0, score: 0, name: 'PLAYER 2' };
 
 const keys = { w: false, s: false, ArrowUp: false, ArrowDown: false };
 window.addEventListener('keydown', e => { if(keys.hasOwnProperty(e.key)) keys[e.key] = true; });
@@ -91,6 +91,14 @@ function showScreen(id) {
 
 function startNewGame(selectedMode) {
     mode = selectedMode;
+    p1.name = document.getElementById('p1Name').value.trim().toUpperCase() || 'PLAYER 1';
+    
+    if (selectedMode === 'bot') {
+        p2.name = 'BOT ' + difficulty.toUpperCase();
+    } else {
+        p2.name = document.getElementById('p2Name').value.trim().toUpperCase() || 'PLAYER 2';
+    }
+
     p1.score = 0; 
     p2.score = 0;
     p1.vy = 0;
@@ -377,12 +385,17 @@ function draw() {
     // Draw Scores
     ctx.shadowBlur = 15;
     ctx.font = '40px "Press Start 2P"';
-    ctx.fillText(p1.score, canvas.width / 4, 60);
-    ctx.fillText(p2.score, 3 * canvas.width / 4, 60);
+    ctx.textAlign = 'center';
+    ctx.fillText(p1.score, canvas.width / 4, 75);
+    ctx.fillText(p2.score, 3 * canvas.width / 4, 75);
+
+    // Draw Names
+    ctx.font = '12px "Press Start 2P"';
+    ctx.fillText(p1.name, canvas.width / 4, 30);
+    ctx.fillText(p2.name, 3 * canvas.width / 4, 30);
 
     // Draw Target Score
     ctx.font = '12px "Press Start 2P"';
-    ctx.textAlign = 'center';
     ctx.fillText(`TARGET: ${WIN_SCORE}`, canvas.width / 2, 30);
     ctx.textAlign = 'left';
 
