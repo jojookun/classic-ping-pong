@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classic Ping Pong</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="crt scanlines">
+        <div id="main-menu" class="screen active">
+            <h1 class="glow-text mega-glow">NEON PONG</h1>
+            <div class="menu-buttons">
+                <button id="btn-vs-ai" class="cyber-btn mega-btn">VS AI</button>
+                <button id="btn-vs-player" class="cyber-btn mega-btn">VS PLAYER</button>
+                <button id="btn-settings" class="cyber-btn mega-btn">SETTINGS</button>
+            </div>
+        </div>
+
+        <div id="settings-menu" class="screen">
+            <h1 class="glow-text mega-glow">SETTINGS</h1>
+            <div class="menu-buttons">
+                <label>Difficulty:
+                    <select id="botDifficulty" class="cyber-select">
+                        <option value="easy">Easy</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="hard">Hard</option>
+                        <option value="insane">Insane</option>
+                        <option value="extreme">Extreme</option>
+                    </select>
+                </label>
+                <label>Speed:
+                    <select id="gameSpeed" class="cyber-select">
+                        <option value="0.5">Slow (0.5x)</option>
+                        <option value="1" selected>Normal (1.0x)</option>
+                        <option value="1.5">Fast (1.5x)</option>
+                        <option value="2">Hyper (2.0x)</option>
+                    </select>
+                </label>
+                <label>Theme:
+                    <select id="gameTheme" class="cyber-select">
+                        <option value="green">Matrix Green</option>
+                        <option value="magenta">Cyber Magenta</option>
+                        <option value="cyan">Tron Cyan</option>
+                        <option value="white">Retro White</option>
+                    </select>
+                </label>
+                <label>Goal Score:
+                    <input type="number" id="gameWinScore" class="cyber-select cyber-input" min="3" max="10" value="10">
+                </label>
+                <button id="btn-back" class="cyber-btn mega-btn" style="margin-top: 10px;">BACK</button>
+            </div>
+        </div>
+
+        <div id="game-screen" class="screen">
+            <div id="ui-panel">
+                <h1 class="glow-text">NEON PONG</h1>
+                <div class="controls">
+                    <button id="restartBtn" class="cyber-btn">QUIT</button>
+                </div>
+                <div class="instructions">
+                    P1: [W] [S] | P2: [Up] [Down]
+                </div>
+            </div>
+            <div class="canvas-container">
+                <canvas id="gameCanvas" width="800" height="500"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>

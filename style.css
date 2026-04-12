@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+    --neon-green: #0fa;
+    --neon-bg: #02110c;
+    --scanline-color: rgba(0, 255, 170, 0.05);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--neon-bg);
+    color: var(--neon-green);
+    font-family: 'Press Start 2P', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* CRT Effects */
+.crt::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+.crt::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.6) 100%);
+    z-index: 3;
+    pointer-events: none;
+}
+
+.scanlines {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Typography & Glow */
+h1.glow-text {
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 4px;
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--neon-green), 0 0 40px var(--neon-green);
+    animation: flicker 2s infinite alternate;
+}
+
+h1.mega-glow {
+    font-size: 50px;
+    margin-bottom: 40px;
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px var(--neon-green), 0 0 80px var(--neon-green);
+}
+
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--neon-green), 0 0 40px var(--neon-green); opacity: 1; }
+    20%, 24%, 55% { text-shadow: none; opacity: 0.8; }
+}
+
+/* Screens & Views */
+.screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.screen.active {
+    display: flex;
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 400px;
+}
+
+.mega-btn {
+    font-size: 18px;
+    padding: 20px;
+    border: 2px solid var(--neon-green);
+}
+
+/* UI Panel Glassmorphism / Cyber Look */
+#ui-panel {
+    margin-bottom: 25px;
+    background: rgba(0, 255, 170, 0.05);
+    border: 1px solid var(--neon-green);
+    box-shadow: inset 0 0 15px rgba(0, 255, 170, 0.2), 0 0 15px rgba(0, 255, 170, 0.2);
+    padding: 20px;
+    width: 760px; /* Aligns with 800px canvas considering padding */
+    backdrop-filter: blur(5px);
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    align-items: center;
+}
+
+.controls label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+/* Interactive Elements */
+.cyber-select, .cyber-btn, .cyber-input {
+    background: transparent;
+    color: var(--neon-green);
+    border: 1px solid var(--neon-green);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    padding: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.cyber-input {
+    width: 60px;
+    text-align: center;
+}
+
+.cyber-select option {
+    background: var(--neon-bg);
+    color: var(--neon-green);
+}
+
+.cyber-select:hover, .cyber-select:focus {
+    box-shadow: 0 0 10px var(--neon-green);
+    background: rgba(0, 255, 170, 0.1);
+}
+
+.cyber-btn {
+    background: rgba(0, 255, 170, 0.1);
+    box-shadow: 0 0 5px rgba(0,255,170,0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.cyber-btn:hover {
+    background: var(--neon-green);
+    color: #000;
+    box-shadow: 0 0 15px var(--neon-green), 0 0 25px var(--neon-green);
+    transform: scale(1.05);
+}
+
+.cyber-btn:active {
+    transform: scale(0.95);
+}
+
+.instructions {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 9px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 1px;
+}
+
+/* Canvas Styling */
+.canvas-container {
+    position: relative;
+    padding: 2px;
+    background: linear-gradient(45deg, var(--neon-green), transparent);
+    border-radius: 4px;
+}
+
+canvas {
+    display: block;
+    background-color: #000;
+    border: 2px solid var(--neon-green);
+    box-shadow: 0 0 20px rgba(0, 255, 170, 0.4);
+    border-radius: 2px;
+}
