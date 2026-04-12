@@ -65,8 +65,7 @@ const themes = {
 let currentTheme = themes.green;
 
 const botSpeeds = {
-    // Pixel limits scaled to roughly 0.9x to 2.0x of the base gameplay
-    easy: 9, medium: 12, hard: 15, insane: 18, extreme: 24
+    easy: 7, medium: 9, hard: 12, insane: 15, extreme: 20
 };
 
 // Particles & Trails
@@ -239,9 +238,9 @@ function update() {
             targetY = tempY;
         } else if (ball.speedX < 0 && difficulty !== 'extreme') {
              targetY = canvas.height / 2 - paddle.height / 2;
-        } else if (difficulty !== 'insane' && difficulty !== 'extreme') {
-             // Delay reaction for easy, medium, hard bots (makes them dumber and late)
-             let reactionThresholds = { easy: 0.65, medium: 0.45, hard: 0.15 };
+        } else if (difficulty !== 'extreme') {
+             // Delay reaction for easy, medium, hard, insane
+             let reactionThresholds = { easy: 0.70, medium: 0.55, hard: 0.35, insane: 0.15 };
              if (ball.x / canvas.width > reactionThresholds[difficulty]) {
                  targetY = ball.y - paddle.height / 2; // Start tracking
              } else {
@@ -283,6 +282,7 @@ function update() {
     
     // Paddle Collision - P1 Hit
     if (ball.x <= p1.x + paddle.width && ball.y + ball.size >= p1.y && ball.y <= p1.y + paddle.height && ball.speedX < 0) {
+        ball.x = p1.x + paddle.width; // Prevent tunneling glitch into score bound
         ball.speedX *= -1.08; 
         let intersectY = (ball.y + ball.size / 2) - (p1.y + paddle.height / 2);
         let normalizedIntersect = intersectY / (paddle.height / 2);
@@ -302,6 +302,7 @@ function update() {
     
     // Paddle Collision - P2 Hit
     if (ball.x + ball.size >= p2.x && ball.y + ball.size >= p2.y && ball.y <= p2.y + paddle.height && ball.speedX > 0) {
+        ball.x = p2.x - ball.size; // Prevent tunneling glitch into score bound
         ball.speedX *= -1.08; 
         let intersectY = (ball.y + ball.size / 2) - (p2.y + paddle.height / 2);
         let normalizedIntersect = intersectY / (paddle.height / 2);
