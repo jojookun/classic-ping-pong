@@ -65,7 +65,7 @@ const themes = {
 let currentTheme = themes.green;
 
 const botSpeeds = {
-    easy: 3, medium: 5, hard: 8, insane: 12, extreme: 25
+    easy: 0.6, medium: 0.9, hard: 1.2, insane: 1.6, extreme: 2.0
 };
 
 // Particles & Trails
