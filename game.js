@@ -65,7 +65,8 @@ const themes = {
 let currentTheme = themes.green;
 
 const botSpeeds = {
-    easy: 0.6, medium: 0.9, hard: 1.2, insane: 1.6, extreme: 2.0
+    // Pixel limits scaled to roughly 0.9x to 2.0x of the base gameplay
+    easy: 9, medium: 12, hard: 15, insane: 18, extreme: 24
 };
 
 // Particles & Trails
