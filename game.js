@@ -82,6 +82,64 @@ const keys = { w: false, s: false, ArrowUp: false, ArrowDown: false };
 window.addEventListener('keydown', e => { if(keys.hasOwnProperty(e.key)) keys[e.key] = true; });
 window.addEventListener('keyup', e => { if(keys.hasOwnProperty(e.key)) keys[e.key] = false; });
 
+// --- Responsive Canvas Resize ---
+const CANVAS_ASPECT = 800 / 500; // original aspect ratio
+
+function resizeCanvas() {
+    const gameScreen = document.getElementById('game-screen');
+    const uiPanel   = document.getElementById('ui-panel');
+    const touchCtrl = document.getElementById('touch-controls');
+
+    // Available height = full screen height minus UI panel height minus touch controls height
+    const panelH   = uiPanel   ? uiPanel.offsetHeight   : 0;
+    const touchH   = touchCtrl ? touchCtrl.offsetHeight : 0;
+    const margin   = 20; // small breathing room
+
+    const maxW = window.innerWidth  * 0.97;
+    const maxH = window.innerHeight - panelH - touchH - margin;
+
+    let newW = maxW;
+    let newH = newW / CANVAS_ASPECT;
+
+    if (newH > maxH) {
+        newH = maxH;
+        newW = newH * CANVAS_ASPECT;
+    }
+
+    canvas.style.width  = newW + 'px';
+    canvas.style.height = newH + 'px';
+
+    // Also fix the ui-panel width to match canvas on small screens
+    if (uiPanel && newW < 760) {
+        uiPanel.style.width = newW + 'px';
+    } else if (uiPanel) {
+        uiPanel.style.width = '';
+    }
+}
+
+window.addEventListener('resize', resizeCanvas);
+
+// --- Touch Controls ---
+function bindTouchBtn(id, keyName) {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    function press(e)   { e.preventDefault(); keys[keyName] = true;  btn.classList.add('pressed'); }
+    function release(e) { e.preventDefault(); keys[keyName] = false; btn.classList.remove('pressed'); }
+    btn.addEventListener('touchstart',  press,   { passive: false });
+    btn.addEventListener('touchend',    release, { passive: false });
+    btn.addEventListener('touchcancel', release, { passive: false });
+    // mouse fallback for dev testing
+    btn.addEventListener('mousedown', press);
+    btn.addEventListener('mouseup',   release);
+    btn.addEventListener('mouseleave',release);
+}
+
+bindTouchBtn('touch-p1-up',   'w');
+bindTouchBtn('touch-p1-down', 's');
+bindTouchBtn('touch-p2-up',   'ArrowUp');
+bindTouchBtn('touch-p2-down', 'ArrowDown');
+
+
 // --- UI Navigation & Screen State ---
 const screens = document.querySelectorAll('.screen');
 function showScreen(id) {
@@ -134,6 +192,8 @@ function startNewGame(selectedMode) {
     gameOver = false;
     resetBall();
     showScreen('game-screen');
+    // Resize canvas after screen is shown so offsetHeight is correct
+    requestAnimationFrame(resizeCanvas);
     if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
 }
 

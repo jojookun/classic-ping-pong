@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Classic Ping Pong</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -97,6 +97,16 @@
             </div>
             <div class="canvas-container">
                 <canvas id="gameCanvas" width="800" height="500"></canvas>
+            </div>
+            <!-- Mobile touch controls -->
+            <div id="touch-controls">
+                <div class="touch-label">P1 (LEFT) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; P2 (RIGHT)</div>
+                <div class="touch-zone-row">
+                    <button id="touch-p1-up"   class="touch-btn">▲</button>
+                    <button id="touch-p1-down" class="touch-btn">▼</button>
+                    <button id="touch-p2-up"   class="touch-btn">▲</button>
+                    <button id="touch-p2-down" class="touch-btn">▼</button>
+                </div>
             </div>
         </div>
     </div>
